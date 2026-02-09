@@ -1,4 +1,33 @@
-# Tienda
+# Tienda  CAMPOWEB
+
+# Descripcion
+CAMPO WEB consiste en el desarrollo de una aplicación web de apoyo administrativo para una tienda física del sector agrícola, dedicada a la venta de productos agrícolas, veterinarios y de ferretería.
+•	El sistema permitirá a los usuarios:
+•	Iniciar sesión con autenticación básica.
+•	Registrar, editar y eliminar productos.
+•	Organizar los productos por categorías (agrícolas, veterinarios y ferretería).
+•	Consultar listados de productos y precios.
+•	Llevar un control básico de inventario.
+•	Visualizar reportes simples sobre productos y stock.
+
+##Publico objetivo 
+
+Esta aplicación está dirigida principalmente a:
+•	Tiendas agrícolas y agropecuarias que necesitan organizar de forma digital sus productos, precios e inventario.
+•	Pequeños comerciantes del sector agrícola que buscan una herramienta sencilla para mejorar la administración de su establecimiento.
+•	Estudiantes y emprendedores interesados en comprender cómo funciona un sistema web aplicado a la gestión de una tienda física del sector agropecuario.
+La interfaz está diseñada para ser simple, clara y fácil de usar, teniendo en cuenta que muchos usuarios pueden contar con conocimientos tecnológicos básicos, priorizando la funcionalidad y la experiencia del usuario.
+
+##Integrantes 
+
+DIEGO 	
+SEBASTIAN BARRAGAN	
+YURANY VELASCO CASTRO	
+
+##Inspiraciones o Referencias 
+
+ITACOL:
+
 
 
 ## Tecnologías a utilizar
