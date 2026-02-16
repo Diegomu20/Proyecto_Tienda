@@ -1,4 +1,4 @@
-# Tienda  CAMPOWEB
+# Tienda  AGROFERRE
 
 ## Descripcion
 CAMPO WEB consiste en el desarrollo de una aplicación web de apoyo administrativo para una tienda física del sector agrícola, dedicada a la venta de productos agrícolas, veterinarios y de ferretería, el sistema permitirá a los usuarios:
