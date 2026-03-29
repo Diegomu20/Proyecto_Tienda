@@ -99,4 +99,10 @@ El desarrollo del proyecto se organizará utilizando la metodología **Scrum**, 
 ---
 
 ## Estado del proyecto
-🟡 *En fase de planeación*
+🟡 *En fase de Desarrollo inicial*
+
+---
+
+
+## Tablero de trabajo
+https://trello.com/invite/b/69c880cca291e6e70ca2b759/ATTI6cb1d06dcc84a1428f4085145c68a328F1FDFD14/proyecto
