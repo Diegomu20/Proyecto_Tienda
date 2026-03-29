@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Productos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<%- include('../partials/header') %>
+
+<div class="categorias">
+  <button onclick="filtrar('todos')">Todos</button>
+  <button onclick="filtrar('agricola')">Agrícola</button>
+  <button onclick="filtrar('veterinaria')">Veterinaria</button>
+  <button onclick="filtrar('ferreteria')">Ferretería</button>
+</div>
+
+<section class="contenedor">
+  <h2>Nuestros Productos</h2>
+
+  <div id="productos" class="grid-productos"></div>
+</section>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
