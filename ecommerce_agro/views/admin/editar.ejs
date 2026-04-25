@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar: <%= product.nombre %> | Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('../partials/adminHeader') %>
+<main class="contenedor" style="max-width:600px;">
+  <h2>✏️ Editar: <%= product.nombre %></h2>
+  <% if (error) { %> <p style="background:#ffebee; color:#D32F2F; padding:0.5rem; border-radius:6px;"><%= error %></p> <% } %>
+  
+  <form action="/admin/editar/<%= product.id %>" method="POST" class="form-grid">
+    <input type="hidden" name="id" value="<%= product.id %>">
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" name="nombre" value="<%= product.nombre %>" required>
+    </div>
+    <div class="form-group">
+      <label>Categoría</label>
+      <select name="categoria" required>
+        <% categorias.forEach(c => { %>
+          <option value="<%= c %>" <%= product.categoria===c?'selected':'' %>><%= c.charAt(0).toUpperCase()+c.slice(1) %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Precio ($)</label>
+      <input type="number" name="precio" value="<%= product.precio %>" min="0" step="1000" required>
+    </div>
+    <div class="form-group">
+      <label>Stock</label>
+      <input type="number" name="stock" value="<%= product.stock %>" min="0" required>
+    </div>
+    <div class="form-group">
+    <label>Imagen actual</label>
+    <% if (product.imagen) { %>
+      <img src="/img/<%= product.imagen.startsWith('uploads/') ? product.imagen : 'uploads/' + product.imagen %>" 
+           alt="<%= product.nombre %>" 
+           style="max-width:200px; border-radius:8px; margin-bottom:0.5rem;">
+    <% } %>
+    <input type="file" id="imagen" name="imagen" accept="image/*">
+    <small style="color:var(--color-text-muted);">Deja vacío para mantener la imagen actual</small>
+  </div>
+  
+  <button type="submit" class="btn">💾 Actualizar Producto</button>
+</form>
+  <a href="/productos" class="btn" style="margin-top:1rem; background:#616161;">⬅️ Volver al catálogo</a>
+</main>
+<%- include('../partials/footer') %>
+</body>
+</html>

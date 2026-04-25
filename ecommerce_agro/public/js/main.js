@@ -1,103 +1,187 @@
+// public/js/main.js
 document.addEventListener("DOMContentLoaded", () => {
+  
+  // 🔹 Estado del carrito (persistente)
+  const state = {
+    cart: JSON.parse(localStorage.getItem("agro_cart")) || []
+  };
 
-const productos = [
-{
-id: 1,
-nombre:"Fertilizante Orgánico",
-precio:25000,
-categoria:"agricola",
-imagen:"/img/fertilizante.jpg"
-},
-{
-id: 2,
-nombre:"Vacuna Bovinos",
-precio:35000,
-categoria:"veterinaria",
-imagen:"/img/vacuna_b.png"
-},
-{
-id: 3,
-nombre:"Azadón",
-precio:45000,
-categoria:"ferreteria",
-imagen:"/img/azadon.jpg"
-},
-{
-id: 4,
-nombre:"Semillas de Maíz",
-precio:15000,
-categoria:"agricola",
-imagen:"/img/maiz.jpg"
-}
-];
+  // 🔹 Referencias al DOM
+  const cartCountEl = document.querySelector(".cart-count");
+  const productGrid = document.querySelector(".grid-productos");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const mainMenu = document.getElementById("main-menu");
 
-const contenedor = document.getElementById("productos");
+  // 🚀 Inicializar
+  updateCartCount();
+  bindAddToCart();      // ← Solo vincula eventos, NO renderiza
+  bindMobileMenu();
+  initCartPage();       // ← Renderiza /carrito si estamos ahí
 
-function mostrarProductos(lista){
+  // 🛒 Vincular botones "Agregar al carrito" (solo si existe el grid)
+  function bindAddToCart() {
+    if (!productGrid) return;
+    
+    productGrid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".add-to-cart-btn");
+      if (!btn) return;
+      e.preventDefault();
 
-contenedor.innerHTML = "";
+      // ✅ Obtener datos del botón (dataset siempre son strings)
+      const imgSrc = btn.closest(".card")?.querySelector("img")?.src || "";
+const imagen = imgSrc.includes("/img/") ? imgSrc.split("/img/")[1] : "default.jpg";
 
-lista.forEach(p=>{
+const item = {
+  id: String(btn.dataset.id),
+  nombre: btn.dataset.name,
+  precio: parseFloat(btn.dataset.price),
+  imagen: imagen
+};
 
-contenedor.innerHTML += `
-<div class="card">
+      if (isNaN(item.precio)) {
+        console.warn("⚠️ Precio inválido:", item);
+        return;
+      }
 
-<img src="${p.imagen}">
+      addToCart(item);
+    });
+  }
 
-<h3>${p.nombre}</h3>
+  function addToCart(item) {
+    // ✅ Comparar IDs como strings para evitar "1" !== 1
+    const existing = state.cart.find(i => String(i.id) === String(item.id));
+    
+    if (existing) {
+      existing.cantidad = (existing.cantidad || 1) + 1;
+    } else {
+      state.cart.push({ ...item, cantidad: 1 });
+    }
+    
+    saveCart();
+    showToast(`✅ ${item.nombre} agregado al carrito`);
+  }
 
-<p class="precio">$${p.precio}</p>
+  function saveCart() {
+    localStorage.setItem("agro_cart", JSON.stringify(state.cart));
+    updateCartCount();
+  }
 
-<a href="/productos/editar/${p.id}">
-  <button>Editar</button>
-</a>
+  function updateCartCount() {
+    const total = state.cart.reduce((sum, i) => sum + (i.cantidad || 1), 0);
+    if (cartCountEl) cartCountEl.textContent = total;
+  }
 
-<button class="btn">Agregar</button>
+  function showToast(msg) {
+    const existing = document.querySelector(".toast");
+    if (existing) existing.remove();
+    
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+  }
 
-</div>
-`;
+  // 🍔 Menú móvil
+  function bindMobileMenu() {
+    if (!menuToggle || !mainMenu) return;
+    
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", !isOpen);
+      mainMenu.classList.toggle("active");
+    });
+    
+    mainMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        menuToggle.setAttribute("aria-expanded", "false");
+        mainMenu.classList.remove("active");
+      });
+    });
+  }
 
-});
+  // 🛒 Renderizar página /carrito
+  function initCartPage() {
+    const cartContainer = document.getElementById("cart-container");
+    const cartItemsEl = document.getElementById("cart-items");
+    const cartSummaryEl = document.getElementById("cart-summary");
+    const emptyCartEl = document.getElementById("empty-cart");
 
-}
+    if (!cartContainer) return; // No estamos en /carrito
 
-if(contenedor){
-mostrarProductos(productos);
-}
+    function renderCart() {
+      if (!state.cart || state.cart.length === 0) {
+        cartContainer.style.display = "none";
+        if (emptyCartEl) emptyCartEl.style.display = "block";
+        return;
+      }
+      
+      if (cartContainer) cartContainer.style.display = "grid";
+      if (emptyCartEl) emptyCartEl.style.display = "none";
 
-setTimeout(() => {
+      let itemsHTML = "";
+      let subtotal = 0;
 
-const buscador = document.getElementById("buscar");
+      state.cart.forEach(item => {
+        const cantidad = item.cantidad || 1;
+        const total = (item.precio || 0) * cantidad;
+        subtotal += total;
+        
+        itemsHTML += `
+          <div class="cart-item" data-id="${item.id}">
+            <img src="/img/${item.imagen || 'default.jpg'}" alt="${item.nombre}" onerror="this.src='/img/default.jpg'">
+            <div class="cart-item-info">
+              <h3>${item.nombre}</h3>
+              <p class="cart-item-price">Unitario: $${(item.precio || 0).toLocaleString()}</p>
+            </div>
+            <div class="cart-qty">
+              <button type="button" class="qty-btn" data-action="dec" data-id="${item.id}">−</button>
+              <input type="number" value="${cantidad}" min="1" readonly>
+              <button type="button" class="qty-btn" data-action="inc" data-id="${item.id}">+</button>
+            </div>
+            <p style="font-weight:600; min-width:90px; text-align:right;">$${total.toLocaleString()}</p>
+            <button type="button" class="remove-btn" data-id="${item.id}">🗑️</button>
+          </div>
+        `;
+      });
 
-if(buscador){
+      if (cartItemsEl) cartItemsEl.innerHTML = itemsHTML;
+      
+      if (cartSummaryEl) {
+        cartSummaryEl.innerHTML = `
+          <h3>Resumen</h3>
+          <div class="summary-row"><span>Subtotal</span><span>$${subtotal.toLocaleString()}</span></div>
+          <div class="summary-row summary-total"><span>Total</span><span>$${subtotal.toLocaleString()}</span></div>
+          <button type="button" class="btn checkout-btn" onclick="alert('✅ Checkout listo para integrar pasarela de pago')">Finalizar Compra</button>
+        `;
+      }
+    }
 
-buscador.addEventListener("input",()=>{
+    // Eventos para +/- y eliminar
+    if (cartItemsEl) {
+      cartItemsEl.addEventListener("click", (e) => {
+        const btn = e.target.closest(".qty-btn, .remove-btn");
+        if (!btn) return;
+        
+        const id = String(btn.dataset.id);
+        const action = btn.dataset.action;
+        const item = state.cart.find(i => String(i.id) === id);
+        
+        if (!item) return;
 
-const texto = buscador.value.toLowerCase();
+        if (action === "inc") item.cantidad = (item.cantidad || 1) + 1;
+        else if (action === "dec" && (item.cantidad || 1) > 1) item.cantidad--;
+        else if (!action) {
+          state.cart = state.cart.filter(i => String(i.id) !== id);
+        }
 
-const filtrados = productos.filter(p =>
-p.nombre.toLowerCase().includes(texto)
-);
+        saveCart();
+        renderCart();
+      });
+    }
 
-mostrarProductos(filtrados);
+    renderCart();
+  }
 
-});
-
-}
-
-},500);
-
-window.filtrar = function(cat){
-
-if(cat === "todos"){
-mostrarProductos(productos);
-return;
-}
-
-const filtrados = productos.filter(p => p.categoria === cat);
-
-mostrarProductos(filtrados);
-
-}
-
+  
 });
