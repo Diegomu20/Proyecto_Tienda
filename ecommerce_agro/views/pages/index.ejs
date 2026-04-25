@@ -1,108 +1,21 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agroferre Store | Insumos Agrícolas, Veterinarios y Ferretería</title>
-  <meta name="description" content="Todo para el campo, el cuidado animal y tu taller. Calidad, precios justos y envío rápido.">
-  <!-- ✅ CORREGIDO: styles.css (con 's') -->
+  <title>AgroVet Store</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
 <%- include('../partials/header') %>
 
 <main>
-  <!-- 🌟 Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Todo lo que necesitas para el campo y el taller</h1>
-      <p>Insumos agrícolas, veterinarios y herramientas de ferretería con la mejor relación calidad-precio.</p>
-      <div class="hero-buttons">
-        <a href="/productos" class="btn btn-primary">Ver catálogo</a>
-        <a href="/carrito" class="btn btn-outline">Ir al carrito</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 🏷️ Categorías Rápidas -->
-  <section class="contenedor categorias-home">
-    <h2>Explora por categoría</h2>
-    <div class="cat-grid">
-      <a href="/productos?cat=agricola" class="cat-card" onclick="window.filtrar && window.filtrar('agricola')">
-        <div class="cat-icon">🌾</div>
-        <h3>Agrícola</h3>
-      </a>
-      <a href="/productos?cat=veterinaria" class="cat-card" onclick="window.filtrar && window.filtrar('veterinaria')">
-        <div class="cat-icon">🐄</div>
-        <h3>Veterinaria</h3>
-      </a>
-      <a href="/productos?cat=ferreteria" class="cat-card" onclick="window.filtrar && window.filtrar('ferreteria')">
-        <div class="cat-icon">🔧</div>
-        <h3>Ferretería</h3>
-      </a>
-    </div>
-  </section>
-
-  <!-- ⭐ Destacados (Renderizado por Servidor - Seguro) -->
-  <section class="contenedor featured-home">
-    <h2>Productos destacados</h2>
-    <div id="productos" class="grid-productos">
-      <% 
-        // ✅ Fallback seguro: evita ReferenceError si la variable no llega
-        var destacados = (typeof featuredProducts !== 'undefined' && Array.isArray(featuredProducts)) 
-          ? featuredProducts 
-          : []; 
-      %>
-
-      <% if (destacados.length > 0) { %>
-        <% destacados.forEach(function(p) { %>
-          <article class="card" data-id="<%= p.id %>">
-            <img src="/img/<%= p.imagen %>" alt="<%= p.nombre %>" loading="lazy" onerror="this.src='/img/default.jpg'">
-            <div class="card-content">
-              <small style="color:var(--color-text-muted); text-transform:uppercase; font-size:0.75rem;">
-                <%= p.categoria %>
-              </small>
-              <h3 title="<%= p.nombre %>"><%= p.nombre %></h3>
-              <p class="precio">$<%= Number(p.precio || 0).toLocaleString() %></p>
-              
-              <span class="stock-badge <%= (p.stock || 0) <= 5 ? 'stock-low' : 'stock-ok' %>">
-                <%= (p.stock || 0) <= 5 ? '⚠️ Pocos' : '✅ Disponible' %>
-              </span>
-              
-              <!-- ✅ Botón con data-* para que main.js vincule eventos -->
-              <button type="button" class="btn add-to-cart-btn" 
-                      data-id="<%= p.id %>" 
-                      data-name="<%= p.nombre %>" 
-                      data-price="<%= p.precio %>">
-                🛒 Agregar
-              </button>
-            </div>
-          </article>
-        <% }); %>
-      <% } else { %>
-        <p style="grid-column:1/-1; text-align:center; color:var(--color-text-muted);">
-          No hay productos disponibles aún.
-        </p>
-      <% } %>
-    </div>
-    <div style="text-align:center; margin-top:2rem;">
-      <a href="/productos" class="btn btn-outline">Ver todos los productos</a>
-    </div>
-  </section>
-
-  <!-- ✅ Sellos de Confianza -->
-  <section class="trust-badges">
-    <div class="badge-container">
-      <div class="badge-item">🚚 Envíos a todo el país</div>
-      <div class="badge-item">🛡️ Garantía de calidad</div>
-      <div class="badge-item">💳 Pago seguro</div>
-      <div class="badge-item">📞 Atención personalizada</div>
-    </div>
-  </section>
+  <h2>Bienvenido a la tienda</h2>
+  <p>Tienda de productos agrícolas, veterinarios y ferretería.</p>
 </main>
 
 <%- include('../partials/footer') %>
-<script src="/js/main.js"></script>
+
 </body>
 </html>

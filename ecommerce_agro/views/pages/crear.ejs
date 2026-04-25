@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Crear Producto</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<%- include('../partials/header') %>
+
+<main class="contenedor">
+  <h2>Crear Producto</h2>
+
+  <form action="/productos" method="POST">
+
+    <input type="text" name="nombre" placeholder="Nombre" required>
+
+    <input type="number" name="precio" placeholder="Precio" required>
+
+    <button type="submit">Guardar</button>
+
+  </form>
+</main>
+
+<%- include('../partials/footer') %>
+
+</body>
+</html>
