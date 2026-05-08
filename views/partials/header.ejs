@@ -1,0 +1,27 @@
+<header class="header">
+  <div class="header-left">
+    <a href="/" class="logo">
+  <img src="/img/logo2.png" alt="Agroferre Store" class="logo-img">
+</a>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="menu" id="main-menu">
+    <a href="/">Inicio</a>
+    <a href="/productos">Productos</a>
+    
+    <% if (typeof user !== 'undefined' && user) { %>
+      <!-- Usuario logueado -->
+      <a href="/mi-cuenta">👤 <%= user.nombre %></a>
+      <a href="/carrito">Carrito</a>
+      <a href="/logout" style="color:#ffcccc;">Salir</a>
+    <% } else { %>
+      <!-- Invitado -->
+      <a href="/login">Login</a>
+      <a href="/register">Registro</a>
+      <a href="/carrito">Carrito</a>
+    <% } %>
+  </nav>
+</header>
