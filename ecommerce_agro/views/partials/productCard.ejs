@@ -1,0 +1,126 @@
+<%-- views/partials/productCard.ejs --%>
+
+<article class="modern-product-card" data-id="<%= product._id || product.id %>">
+
+  <!-- FAVORITE -->
+
+  <button class="favorite-btn" type="button">
+
+    ❤️
+
+  </button>
+
+  <!-- IMAGE -->
+
+  <div class="product-image-container">
+
+    <img
+      src="/img/<%= product.image || 'default.jpg' %>"
+      alt="<%= product.name %>"
+      loading="lazy"
+      onerror="this.src='/img/default.jpg'"
+      class="product-image"
+    >
+
+  </div>
+
+  <!-- CONTENT -->
+
+  <div class="product-info">
+
+    <!-- CATEGORY -->
+
+    <small class="product-category">
+
+      <%= product.category || 'General' %>
+
+    </small>
+
+    <!-- TITLE -->
+
+    <h3
+      class="product-title"
+      title="<%= product.name %>"
+    >
+
+      <%= product.name %>
+
+    </h3>
+
+    <!-- RATING -->
+
+    <div class="product-rating">
+
+      ⭐⭐⭐⭐⭐
+
+      <span>(4.8)</span>
+
+    </div>
+
+    <!-- PRICE -->
+
+    <p class="product-price">
+
+      $<%= Number(product.price || 0).toLocaleString() %>
+
+    </p>
+
+    <small class="tax-text">
+
+      IVA incluido
+
+    </small>
+
+    <!-- STOCK -->
+
+    <% if (typeof product.stock !== 'undefined') { %>
+
+      <% if (product.stock <= 5 && product.stock > 0) { %>
+
+        <span class="stock-badge stock-low">
+
+          ⚠️ Solo <%= product.stock %> disponibles
+
+        </span>
+
+      <% } else if (product.stock > 0) { %>
+
+        <span class="stock-badge stock-ok">
+
+          ✅ Disponible
+
+        </span>
+
+      <% } else { %>
+
+        <span class="stock-badge stock-out">
+
+          ❌ Agotado
+
+        </span>
+
+      <% } %>
+
+    <% } %>
+
+    <!-- BUTTON -->
+
+    <button
+      type="button"
+      class="add-cart-modern-btn"
+      data-id="<%= product._id || product.id %>"
+      data-name="<%= product.name %>"
+      data-price="<%= product.price %>"
+      <%= (product.stock && product.stock <= 0) ? 'disabled' : '' %>
+    >
+
+      <%= (product.stock && product.stock <= 0)
+        ? 'Producto agotado'
+        : '🛒 Agregar al carrito'
+      %>
+
+    </button>
+
+  </div>
+
+</article>

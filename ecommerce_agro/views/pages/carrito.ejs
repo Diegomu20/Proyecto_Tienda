@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - Agroferre Store</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<%- include('../partials/header') %>
+
+<main class="contenedor">
+  <h2>🛒 Tu Carrito</h2>
+
+  <div id="cart-container" class="cart-layout">
+    <div id="cart-items"></div>
+    <div id="cart-summary" class="cart-summary"></div>
+  </div>
+
+  <div id="empty-cart" class="empty-state">
+    <p style="font-size:1.2rem; margin-bottom:1rem;">Tu carrito está vacío</p>
+    <a href="/productos" class="btn" style="width:auto; display:inline-block;">Explorar productos</a>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

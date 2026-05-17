@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Crear Producto | Admin</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<%- include('../partials/adminHeader') %>
+
+<main class="login-container">
+
+  <div class="login-card admin-product-card">
+
+    <h2 class="login-title">
+      <i class="fa-solid fa-box-open"></i>
+      Nuevo Producto
+    </h2>
+
+    <p class="login-subtitle">
+      Agrega un nuevo producto al inventario
+    </p>
+
+    <% if (error) { %>
+      <div class="error-box">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form 
+      action="/admin/crear"
+      method="POST"
+      enctype="multipart/form-data"
+      class="login-form"
+    >
+
+      <!-- Nombre -->
+
+      <div class="form-group">
+
+        <label for="nombre">Nombre</label>
+
+        <div class="input-group">
+          <i class="fa-solid fa-tag"></i>
+
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            value="<%= product?.nombre || '' %>"
+            placeholder="Nombre del producto"
+            required
+          >
+        </div>
+
+      </div>
+
+      <!-- Categoría -->
+
+      <div class="form-group">
+
+        <label for="categoria">Categoría</label>
+
+        <div class="input-group">
+
+          <i class="fa-solid fa-layer-group"></i>
+
+          <select
+            name="categoria"
+            id="categoria"
+            required
+            class="custom-select"
+          >
+
+            <% categorias.forEach(c => { %>
+
+              <option
+                value="<%= c %>"
+                <%= product?.categoria === c ? 'selected' : '' %>
+              >
+                <%= c.charAt(0).toUpperCase() + c.slice(1) %>
+              </option>
+
+            <% }) %>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <!-- Precio -->
+
+      <div class="form-group">
+
+        <label for="precio">Precio ($)</label>
+
+        <div class="input-group">
+
+          <i class="fa-solid fa-dollar-sign"></i>
+
+          <input
+            type="number"
+            id="precio"
+            name="precio"
+            value="<%= product?.precio || '' %>"
+            min="0"
+            step="1000"
+            placeholder="Precio del producto"
+            required
+          >
+
+        </div>
+
+      </div>
+
+      <!-- Stock -->
+
+      <div class="form-group">
+
+        <label for="stock">Stock</label>
+
+        <div class="input-group">
+
+          <i class="fa-solid fa-boxes-stacked"></i>
+
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            value="<%= product?.stock || 0 %>"
+            min="0"
+            placeholder="Cantidad disponible"
+            required
+          >
+
+        </div>
+
+      </div>
+
+      <!-- Imagen -->
+
+      <div class="form-group">
+
+        <label for="imagen">Imagen del producto</label>
+
+        <div class="file-upload">
+
+          <label for="imagen" class="file-label">
+            <i class="fa-solid fa-image"></i>
+            Seleccionar imagen
+          </label>
+
+          <input
+            type="file"
+            id="imagen"
+            name="imagen"
+            accept="image/*"
+            required
+          >
+
+        </div>
+
+        <small class="file-help">
+          Formatos: JPG, PNG, WebP • Máx: 2MB
+        </small>
+
+        <div id="preview-container" class="preview-container">
+
+          <img id="image-preview">
+
+        </div>
+
+      </div>
+
+      <button type="submit" class="login-btn">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Guardar Producto
+      </button>
+
+    </form>
+
+  </div>
+
+</main>
+
+<script>
+  document.getElementById('imagen').addEventListener('change', function(e) {
+
+    const file = e.target.files[0];
+
+    if (file) {
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+
+        document.getElementById('image-preview').src = e.target.result;
+
+        document.getElementById('preview-container').style.display = 'block';
+
+      };
+
+      reader.readAsDataURL(file);
+
+    }
+
+  });
+</script>
+
+<%- include('../partials/footer') %>
+
+</body>
+</html>
