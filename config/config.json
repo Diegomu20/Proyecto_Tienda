@@ -1,0 +1,12 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "agroferre_db",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql",
+    "logging": false,
+    "timezone": "-05:00"
+  }
+}

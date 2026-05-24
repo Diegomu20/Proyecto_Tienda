@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Producto | Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .field-error { color: #e53e3e; font-size: 12px; margin-top: 4px; display: none; }
+    .input-group.invalid input,
+    .input-group.invalid select,
+    .input-group.invalid textarea { border-color: #e53e3e; }
+    .input-group.valid input,
+    .input-group.valid select,
+    .input-group.valid textarea   { border-color: #38a169; }
+    .char-counter { font-size: 11px; color: #718096; text-align: right; margin-top: 2px; }
+    .char-counter.ok  { color: #38a169; }
+    .char-counter.bad { color: #e53e3e; }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/adminHeader') %>
+
+<main class="login-container">
+  <div class="login-card admin-product-card">
+
+    <h2 class="login-title">
+      <i class="fa-solid fa-box-open"></i> Nuevo Producto
+    </h2>
+    <p class="login-subtitle">Agrega un nuevo producto al inventario</p>
+
+    <% if (error) { %>
+      <div class="error-box"><%= error %></div>
+    <% } %>
+
+    <form id="crearForm" action="/admin/crear" method="POST"
+          enctype="multipart/form-data" class="login-form" novalidate>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre del producto</label>
+        <div class="input-group" id="group-nombre">
+          <i class="fa-solid fa-tag"></i>
+          <input type="text" id="nombre" name="nombre"
+                 value="<%= product?.nombre || '' %>"
+                 placeholder="Mínimo 5 caracteres">
+        </div>
+        <span class="field-error" id="err-nombre"></span>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <div class="input-group" id="group-descripcion" style="height:auto">
+          <i class="fa-solid fa-align-left" style="align-self:flex-start;padding-top:10px"></i>
+          <textarea id="descripcion" name="descripcion" rows="3"
+                    placeholder="Mínimo 20 caracteres"
+                    style="resize:vertical;padding:8px 12px;width:100%"><%= product?.descripcion || '' %></textarea>
+        </div>
+        <div class="char-counter" id="desc-counter">0 / 20 mínimo</div>
+        <span class="field-error" id="err-descripcion"></span>
+      </div>
+
+      <!-- Categoría -->
+      <div class="form-group">
+        <label for="categoria">Categoría</label>
+        <div class="input-group" id="group-categoria">
+          <i class="fa-solid fa-layer-group"></i>
+          <select name="categoria" id="categoria" class="custom-select">
+            <% categorias.forEach(c => { %>
+              <option value="<%= c %>" <%= product?.categoria === c ? 'selected' : '' %>>
+                <%= c.charAt(0).toUpperCase() + c.slice(1) %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+        <span class="field-error" id="err-categoria"></span>
+      </div>
+
+      <!-- Precio -->
+      <div class="form-group">
+        <label for="precio">Precio ($)</label>
+        <div class="input-group" id="group-precio">
+          <i class="fa-solid fa-dollar-sign"></i>
+          <input type="number" id="precio" name="precio"
+                 value="<%= product?.precio || '' %>"
+                 min="0" step="1000" placeholder="Precio del producto">
+        </div>
+        <span class="field-error" id="err-precio"></span>
+      </div>
+
+      <!-- Stock -->
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <div class="input-group" id="group-stock">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <input type="number" id="stock" name="stock"
+                 value="<%= product?.stock || 0 %>"
+                 min="0" placeholder="Cantidad disponible">
+        </div>
+        <span class="field-error" id="err-stock"></span>
+      </div>
+
+      <!-- Imagen -->
+      <div class="form-group">
+        <label for="imagen">Imagen del producto <span style="color:#e53e3e">*</span></label>
+        <div class="file-upload">
+          <label for="imagen" class="file-label">
+            <i class="fa-solid fa-image"></i> Seleccionar imagen
+          </label>
+          <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png,.gif">
+        </div>
+        <small class="file-help">Formatos: JPG, JPEG, PNG, GIF • Máx: 2MB</small>
+        <span class="field-error" id="err-imagen"></span>
+        <div id="preview-container" class="preview-container" style="display:none">
+          <img id="image-preview">
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">
+        <i class="fa-solid fa-floppy-disk"></i> Guardar Producto
+      </button>
+
+    </form>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script>
+// ── Utilidades ────────────────────────────────────────────────────────────────
+function showError(errId, groupId, msg) {
+  const e = document.getElementById(errId);
+  const g = document.getElementById(groupId);
+  if (!e || !g) return;
+  e.textContent = msg; e.style.display = 'block';
+  g.classList.add('invalid'); g.classList.remove('valid');
+}
+function clearError(errId, groupId) {
+  const e = document.getElementById(errId);
+  const g = document.getElementById(groupId);
+  if (!e || !g) return;
+  e.textContent = ''; e.style.display = 'none';
+  g.classList.remove('invalid'); g.classList.add('valid');
+}
+
+// ── Validaciones ──────────────────────────────────────────────────────────────
+function validateNombre() {
+  const val = document.getElementById('nombre').value.trim();
+  if (!val)          { showError('err-nombre', 'group-nombre', 'El nombre es obligatorio.'); return false; }
+  if (val.length < 5){ showError('err-nombre', 'group-nombre', 'El nombre debe tener al menos 5 caracteres.'); return false; }
+  clearError('err-nombre', 'group-nombre'); return true;
+}
+
+function validateDescripcion() {
+  const val = document.getElementById('descripcion').value.trim();
+  const counter = document.getElementById('desc-counter');
+  counter.textContent = val.length + ' / 20 mínimo';
+  if (val.length > 0 && val.length < 20) {
+    counter.className = 'char-counter bad';
+    showError('err-descripcion', 'group-descripcion', 'La descripción debe tener al menos 20 caracteres.');
+    return false;
+  }
+  counter.className = val.length >= 20 ? 'char-counter ok' : 'char-counter';
+  clearError('err-descripcion', 'group-descripcion'); return true;
+}
+
+function validatePrecio() {
+  const val = parseFloat(document.getElementById('precio').value);
+  if (!val || val <= 0) { showError('err-precio', 'group-precio', 'El precio debe ser mayor a 0.'); return false; }
+  clearError('err-precio', 'group-precio'); return true;
+}
+
+function validateStock() {
+  const val = parseInt(document.getElementById('stock').value);
+  if (isNaN(val) || val < 0) { showError('err-stock', 'group-stock', 'El stock no puede ser negativo.'); return false; }
+  clearError('err-stock', 'group-stock'); return true;
+}
+
+function validateImagen() {
+  const file = document.getElementById('imagen').files[0];
+  if (!file) { showError('err-imagen', 'group-nombre', 'La imagen es obligatoria.'); document.getElementById('err-imagen').style.display='block'; return false; }
+  const allowed = /\.(jpg|jpeg|png|gif)$/i;
+  if (!allowed.test(file.name)) { document.getElementById('err-imagen').textContent = 'Solo JPG, JPEG, PNG o GIF.'; document.getElementById('err-imagen').style.display='block'; return false; }
+  document.getElementById('err-imagen').style.display='none'; return true;
+}
+
+// ── Eventos en tiempo real ────────────────────────────────────────────────────
+document.getElementById('nombre').addEventListener('input', validateNombre);
+document.getElementById('descripcion').addEventListener('input', validateDescripcion);
+document.getElementById('precio').addEventListener('input', validatePrecio);
+document.getElementById('stock').addEventListener('input', validateStock);
+
+document.getElementById('imagen').addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  const allowed = /\.(jpg|jpeg|png|gif)$/i;
+  if (!allowed.test(file.name)) {
+    document.getElementById('err-imagen').textContent = 'Solo JPG, JPEG, PNG o GIF.';
+    document.getElementById('err-imagen').style.display = 'block';
+    return;
+  }
+  document.getElementById('err-imagen').style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('image-preview').src = e.target.result;
+    document.getElementById('preview-container').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+// ── Submit ────────────────────────────────────────────────────────────────────
+document.getElementById('crearForm').addEventListener('submit', function(e) {
+  const ok = [validateNombre(), validateDescripcion(), validatePrecio(), validateStock(), validateImagen()];
+  if (ok.includes(false)) {
+    e.preventDefault();
+    const firstErr = document.querySelector('.field-error[style*="block"]');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agroferre Store | Insumos Agrícolas, Veterinarios y Ferretería</title>
+  <meta name="description" content="Todo para el campo, el cuidado animal y tu taller. Calidad, precios justos y envío rápido.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* ── SECCIÓN TIPS ─────────────────────────────────────────────── */
+    .tips-section {
+      background: #f4faf6;
+      padding: 3rem 0;
+    }
+    .tips-section h2 {
+      text-align: center;
+      color: #2d6a4f;
+      font-size: 1.8rem;
+      margin-bottom: .5rem;
+    }
+    .tips-section .tips-subtitle {
+      text-align: center;
+      color: #6c757d;
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+    .tips-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tips-tab {
+      padding: .55rem 1.5rem;
+      border-radius: 50px;
+      border: 2px solid #2d6a4f;
+      background: transparent;
+      color: #2d6a4f;
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tips-tab.active,
+    .tips-tab:hover { background: #2d6a4f; color: #fff; }
+
+    .tips-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .tips-grid.active { display: grid; }
+
+    .tip-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .tip-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.13);
+    }
+    .tip-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+    .tip-card-body {
+      padding: 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tip-tag {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: .25rem .7rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: .6rem;
+      width: fit-content;
+    }
+    .tag-agri  { background: #e8f5e9; color: #2d6a4f; }
+    .tag-vet   { background: #e3f2fd; color: #1565c0; }
+    .tag-ferre { background: #fff3e0; color: #e65100; }
+
+    .tip-card h3 {
+      font-size: 1rem;
+      color: #1a1a1a;
+      margin-bottom: .5rem;
+      line-height: 1.4;
+    }
+    .tip-card p {
+      font-size: .88rem;
+      color: #6c757d;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .tip-card .tip-footer {
+      margin-top: 1rem;
+      font-size: .8rem;
+      color: #adb5bd;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/header') %>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Todo lo que necesitas para el campo y el taller</h1>
+      <p>Insumos agrícolas, veterinarios y herramientas de ferretería con la mejor relación calidad-precio.</p>
+      <div class="hero-buttons">
+        <a href="/productos" class="btn btn-primary">Ver catálogo</a>
+        <a href="/carrito" class="btn btn-outline">Ir al carrito</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorías -->
+  <section class="contenedor categorias-home">
+    <h2>Explora por categoría</h2>
+    <div class="cat-grid">
+      <a href="/productos?categoria=agricola" class="cat-card">
+        <div class="cat-icon">🌾</div>
+        <h3>Agrícola</h3>
+      </a>
+      <a href="/productos?categoria=veterinaria" class="cat-card">
+        <div class="cat-icon">🐄</div>
+        <h3>Veterinaria</h3>
+      </a>
+      <a href="/productos?categoria=ferreteria" class="cat-card">
+        <div class="cat-icon">🔧</div>
+        <h3>Ferretería</h3>
+      </a>
+    </div>
+  </section>
+
+  <!-- Productos destacados -->
+  <section class="contenedor featured-home">
+    <h2>Productos destacados</h2>
+    <div id="productos" class="grid-productos">
+      <%
+        var destacados = (typeof featuredProducts !== 'undefined' && Array.isArray(featuredProducts))
+          ? featuredProducts : [];
+      %>
+      <% if (destacados.length > 0) { %>
+        <% destacados.forEach(function(p) { %>
+          <article class="card" data-id="<%= p.id %>">
+            <img src="/img/<%= p.imagen %>" alt="<%= p.nombre %>" loading="lazy" onerror="this.src='/img/default.jpg'">
+            <div class="card-content">
+              <small style="color:var(--color-text-muted);text-transform:uppercase;font-size:0.75rem;">
+                <%= p.categoria %>
+              </small>
+              <h3 title="<%= p.nombre %>"><%= p.nombre %></h3>
+              <p class="precio">$<%= Number(p.precio || 0).toLocaleString() %></p>
+              <span class="stock-badge <%= (p.stock || 0) <= 5 ? 'stock-low' : 'stock-ok' %>">
+                <%= (p.stock || 0) <= 5 ? '⚠️ Pocos' : '✅ Disponible' %>
+              </span>
+              <button type="button" class="btn add-to-cart-btn"
+                      data-id="<%= p.id %>"
+                      data-name="<%= p.nombre %>"
+                      data-price="<%= p.precio %>">
+                🛒 Agregar
+              </button>
+            </div>
+          </article>
+        <% }); %>
+      <% } else { %>
+        <p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);">
+          No hay productos disponibles aún.
+        </p>
+      <% } %>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="/productos" class="btn btn-outline">Ver todos los productos</a>
+    </div>
+  </section>
+
+   <!-- ══════════════════════════════════════════════════════════════ -->
+  <!--  TIPS AGRÍCOLAS & VETERINARIOS                                -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <section class="tips-section">
+    <div class="contenedor">
+      <h2>📚 Tips & Consejos</h2>
+      <p class="tips-subtitle">Conocimiento práctico para el campo, los animales y el taller</p>
+
+      <!-- Tabs -->
+      <div class="tips-tabs">
+        <button class="tips-tab active" data-tab="agricola">🌾 Agrícola</button>
+        <button class="tips-tab" data-tab="veterinaria">🐄 Veterinaria</button>
+        <button class="tips-tab" data-tab="ferreteria">🔧 Ferretería</button>
+      </div>
+
+      <!-- ── TIPS AGRÍCOLAS ─────────────────────────────────────── -->
+      <div class="tips-grid active" id="tab-agricola">
+
+        <div class="tip-card">
+          <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80" alt="Riego eficiente">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-agri">🌾 Agrícola</span>
+            <h3>Riego eficiente: ahorra agua y aumenta la cosecha</h3>
+            <p>El riego por goteo reduce el consumo de agua hasta en un 60% y entrega el agua directamente a la raíz, evitando enfermedades por humedad en las hojas.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 2 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80" alt="Control de plagas">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-agri">🌾 Agrícola</span>
+            <h3>Control de plagas sin dañar el suelo</h3>
+            <p>Usa trampas amarillas pegantes para monitorear y controlar insectos voladores. Aplica insecticidas solo cuando la plaga supere el umbral económico de daño.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80" alt="Fertilización">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-agri">🌾 Agrícola</span>
+            <h3>Fertilización correcta según la etapa del cultivo</h3>
+            <p>En etapa vegetativa usa fertilizantes altos en Nitrógeno (N). En floración y fructificación, aumenta el Fósforo (P) y el Potasio (K) para mejor producción.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 4 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&q=80" alt="Suelo saludable">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-agri">🌾 Agrícola</span>
+            <h3>Cómo mejorar la salud del suelo con abono orgánico</h3>
+            <p>El compost mejora la estructura del suelo, aumenta la retención de agua y aporta microorganismos benéficos. Aplica mínimo 2 toneladas por hectárea al año.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&q=80" alt="Semillas">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-agri">🌾 Agrícola</span>
+            <h3>Selección y almacenamiento correcto de semillas</h3>
+            <p>Guarda tus semillas en frascos herméticos con un poco de cal o sílica gel para absorber la humedad. Mantenlas en un lugar fresco, seco y oscuro.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 2 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80" alt="Rotación de cultivos">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-agri">🌾 Agrícola</span>
+            <h3>Rotación de cultivos para suelos más productivos</h3>
+            <p>Alternar leguminosas (fríjol, soya) con gramíneas (maíz, trigo) permite fijar nitrógeno en el suelo y romper los ciclos de plagas y enfermedades.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+      </div>
+
+  <!-- ── TIPS VETERINARIOS ──────────────────────────────────── -->
+      <div class="tips-grid" id="tab-veterinaria">
+
+        <div class="tip-card">
+          <img src="https://normograma.invima.gov.co/compilacion/docs/graficas/resolucion_ica_34348_2018_obj_1.gif" alt="Vacunación bovinos">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-vet">🐄 Veterinaria</span>
+            <h3>Calendario de vacunación en bovinos</h3>
+            <p>Vacuna contra Aftosa cada 6 meses por obligación legal. Brucela a las hembras entre 3-8 meses. Carbón sintomático y edematoso al destete y luego anual.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 4 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDKG_lQI5Oc-OxsN_o8w-n4i9o0vsBwY65WQ&s" alt="Desparasitación">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-vet">🐄 Veterinaria</span>
+            <h3>Desparasitación estratégica del ganado</h3>
+            <p>Desparasita al inicio y fin de la época de lluvias. Rota los principios activos (Ivermectina, Albendazol, Levamisol) para evitar resistencia parasitaria.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://a.storyblok.com/f/160385/d6bd4fb3be/suplementacion-mineral-bovinos.jpg" alt="Nutrición animal">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-vet">🐄 Veterinaria</span>
+            <h3>Nutrición y suplementación mineral en animales</h3>
+            <p>La deficiencia de minerales reduce la fertilidad y la producción. Ofrece sal mineralizada con al menos 8% de fósforo en zonas de suelos ácidos.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6hzSXP3jmdvR6KqmHSEVVxxA4b5u9DPTyIQ&s" alt="Mastitis">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-vet">🐄 Veterinaria</span>
+            <h3>Prevención y detección temprana de mastitis</h3>
+            <p>Haz la prueba CMT (California Mastitis Test) mensualmente. Una higiene correcta del ordeño y el sellado de pezones reduce la incidencia hasta un 80%.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 4 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://a.storyblok.com/f/160385/9d4c882ec2/ganado_de_leche.jpg/m/?w=256&q=100" alt="Bienestar animal">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-vet">🐄 Veterinaria</span>
+            <h3>Bienestar animal: claves para un manejo sin estrés</h3>
+            <p>Evita golpes y gritos al manejar el ganado. Usa pasillos curvos en los corrales de manejo. El estrés reduce la producción de leche hasta un 20%.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 2 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://ciencia.unam.mx/uploads/textos/imagenes/ar_medicina_preventiva_mascotas_02_25112021.jpg" alt="Caninos">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-vet">🐄 Veterinaria</span>
+            <h3>Cuidado básico de perros y mascotas en el campo</h3>
+            <p>Los perros de finca necesitan vacuna antirábica anual, desparasitación cada 3 meses y revisión de garrapatas. Un perro sano es el mejor guardián.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 2 min</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── TIPS FERRETERÍA ────────────────────────────────────── -->
+      <div class="tips-grid" id="tab-ferreteria">
+
+        <div class="tip-card">
+          <img src="https://www.maquituls.es/noticias/wp-content/uploads/2016/08/limpiar-herra.jpg.webp" alt="Herramientas">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-ferre">🔧 Ferretería</span>
+            <h3>Mantenimiento básico de herramientas manuales</h3>
+            <p>Limpia las herramientas después de cada uso y aplica una capa fina de aceite para evitar la oxidación. Afila los filos regularmente para mayor eficiencia.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 2 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAoXqD5mhjCd-s52R3se5lYh71KYt51OHBjg&s" alt="Soldadura">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-ferre">🔧 Ferretería</span>
+            <h3>Consejos de seguridad al soldar en el taller</h3>
+            <p>Usa siempre careta de soldar, guantes de cuero y delantal ignífugo. Trabaja en lugares ventilados y ten un extintor de CO₂ cerca del área de trabajo.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSR6M9XGMakvFkdF2e8S0z4-LlyVp-R0hk_A&s" alt="Pintura">
+          <div class="tip-card-body">
+            <span class="tip-tag tag-ferre">🔧 Ferretería</span>
+            <h3>Cómo pintar correctamente superficies metálicas</h3>
+            <p>Lija y desengrasas bien antes de pintar. Aplica primero una capa de anticorrosivo, luego la pintura de acabado en capas delgadas. Espera secado entre capas.</p>
+            <div class="tip-footer"><i class="fa-solid fa-clock"></i> Lectura: 3 min</div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sellos de confianza -->
+  <section class="trust-badges">
+    <div class="badge-container">
+      <div class="badge-item">🚚 Envíos a todo el país</div>
+      <div class="badge-item">🛡️ Garantía de calidad</div>
+      <div class="badge-item">💳 Pago seguro</div>
+      <div class="badge-item">📞 Atención personalizada</div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+
+<script>
+// Tabs de tips
+document.querySelectorAll('.tips-tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    // Desactivar todos
+    document.querySelectorAll('.tips-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tips-grid').forEach(g => g.classList.remove('active'));
+    // Activar el seleccionado
+    this.classList.add('active');
+    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

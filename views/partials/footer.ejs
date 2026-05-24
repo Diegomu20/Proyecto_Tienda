@@ -1,0 +1,153 @@
+<footer class="footer-principal">
+  <div class="footer-contenido">
+
+    <!-- Columna 1: Conoce la empresa -->
+    <div class="footer-col">
+      <div class="footer-logo-area">
+        <span class="footer-logo-text">🌿 Agroferre Store</span>
+      </div>
+      <p class="footer-desc">
+        Somos una empresa especializada en insumos agrícolas, veterinarios y ferretería. Llevamos al campo colombiano productos de calidad con los mejores precios y atención personalizada.
+      </p>
+      <div class="footer-sociales">
+        <a href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Columna 2: Corporativo -->
+    <div class="footer-col">
+      <h4 class="footer-titulo">CORPORATIVO</h4>
+      <ul class="footer-links">
+        <li><a href="/politica-datos"><i class="fa-solid fa-file-shield"></i> Política de tratamiento de datos personales</a></li>
+        <li><a href="/terminos"><i class="fa-solid fa-scale-balanced"></i> Términos y condiciones</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Líneas de productos -->
+    <div class="footer-col">
+      <h4 class="footer-titulo">LÍNEAS DE PRODUCTOS</h4>
+      <ul class="footer-links">
+        <li><a href="/productos?categoria=agricola">🌾 Insumos Agrícolas</a></li>
+        <li><a href="/productos?categoria=veterinaria">🐄 Veterinaria</a></li>
+        <li><a href="/productos?categoria=ferreteria">🔧 Ferretería</a></li>
+        <li><a href="/productos?categoria=ferreteria">🏗️ Herramientas</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 4: Contacto -->
+    <div class="footer-col">
+      <h4 class="footer-titulo">CONTÁCTANOS</h4>
+      <ul class="footer-contacto">
+        <li><i class="fa-solid fa-location-dot"></i> San Gil, Santander, Colombia</li>
+        <li><i class="fa-solid fa-phone"></i> +57 300 123 4567</li>
+        <li><i class="fa-solid fa-envelope"></i> ventas@agroferre.com</li>
+        <li><i class="fa-solid fa-clock"></i> Lun – Sáb: 7:00am – 6:00pm</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="footer-bottom">
+    <p>© 2026 Agroferre Store — Todos los derechos reservados</p>
+    <p>Hecho con 💚 para el campo colombiano</p>
+  </div>
+</footer>
+
+<style>
+.footer-principal {
+  background: #1b2e20;
+  color: #cdd8cd;
+  padding: 3rem 0 0;
+  margin-top: 3rem;
+  font-size: .9rem;
+}
+.footer-contenido {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 2.5rem;
+}
+@media (max-width: 900px) {
+  .footer-contenido { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 550px) {
+  .footer-contenido { grid-template-columns: 1fr; }
+}
+
+.footer-logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #52b788;
+  display: block;
+  margin-bottom: .75rem;
+}
+.footer-desc {
+  color: #9bb09b;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+.footer-sociales { display: flex; gap: .75rem; }
+.footer-sociales a {
+  width: 36px; height: 36px;
+  background: #2d4a33;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #52b788;
+  text-decoration: none;
+  transition: background .2s, color .2s;
+}
+.footer-sociales a:hover { background: #52b788; color: #fff; }
+
+.footer-titulo {
+  color: #52b788;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid #2d4a33;
+}
+.footer-links {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: .55rem;
+}
+.footer-links a {
+  color: #9bb09b;
+  text-decoration: none;
+  transition: color .2s;
+  display: flex; align-items: center; gap: .4rem;
+}
+.footer-links a:hover { color: #52b788; }
+.footer-links i { font-size: .8rem; width: 14px; }
+
+.footer-contacto {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: .7rem;
+}
+.footer-contacto li {
+  display: flex; align-items: flex-start; gap: .6rem;
+  color: #9bb09b; line-height: 1.5;
+}
+.footer-contacto i { color: #52b788; margin-top: 2px; flex-shrink: 0; }
+
+.footer-bottom {
+  background: #111e14;
+  text-align: center;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem;
+  color: #6b856b;
+  font-size: .82rem;
+}
+</style>

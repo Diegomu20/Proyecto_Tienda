@@ -1,0 +1,167 @@
+<header class="top-header">
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <div class="top-bar-left">
+
+      <span>📞 +57 300 123 4567</span>
+
+      <span>✉️ ventas@agroferre.com</span>
+
+    </div>
+
+    <div class="top-bar-right">
+
+      <a href="#">Ayuda</a>
+
+      <a href="#">Seguimiento</a>
+
+    </div>
+
+  </div>
+
+  <!-- MAIN HEADER -->
+
+  <div class="main-header">
+
+    <!-- LOGO -->
+
+    <div class="header-logo">
+
+      <a href="/" class="logo-link">
+
+        <img
+          src="/img/logo2.png"
+          alt="Agroferre Store"
+          class="logo-img"
+        >
+
+        <div class="logo-text">
+
+          <h2>Agroferre Store</h2>
+
+          <span>Tu tienda de confianza</span>
+
+        </div>
+
+      </a>
+
+    </div>
+
+    <!-- SEARCH -->
+
+    <div class="header-search">
+
+      <form action="/productos" method="GET">
+
+        <input
+        type="text"
+        name="buscar"
+        placeholder="Buscar productos, marcas, categorías..."
+        >
+
+        <button type="submit">
+
+          🔍
+
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="header-actions">
+
+      <% if (typeof user !== 'undefined' && user) { %>
+
+        <a href="/mi-cuenta" class="header-icon">
+
+          <span>👤</span>
+
+          <small><%= user.nombre %></small>
+
+        </a>
+
+        <a href="/carrito" class="header-icon">
+
+          <span>🛒</span>
+
+          <small>Carrito</small>
+
+        </a>
+
+        <a href="/logout" class="header-icon logout-btn">
+
+          <span>🚪</span>
+
+          <small>Salir</small>
+
+        </a>
+
+      <% } else { %>
+
+        <a href="/login" class="header-icon">
+
+          <span>👤</span>
+
+          <small>Login</small>
+
+        </a>
+
+        <a href="/register" class="header-icon">
+
+          <span>❤️</span>
+
+          <small>Registro</small>
+
+        </a>
+
+        <a href="/carrito" class="header-icon">
+
+          <span>🛒</span>
+
+          <small>Carrito</small>
+
+        </a>
+
+      <% } %>
+
+    </div>
+
+  </div>
+
+  <!-- CATEGORIES -->
+
+  <nav class="categories-bar">
+
+    <a href="/productos" class="category-item active">
+
+      🛍️ Todos
+
+    </a>
+
+    <a href="/productos?categoria=veterinaria" class="category-item">
+
+      🐾 Veterinaria
+
+    </a>
+
+    <a href="/productos?categoria=agricola" class="category-item">
+
+      🌾 Agrícola
+
+    </a>
+
+    <a href="/productos?categoria=ferreteria" class="category-item">
+
+      🔧 Ferretería
+
+    </a>
+
+  </nav>
+
+</header>

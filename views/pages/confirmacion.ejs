@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Compra exitosa! - Agroferre Store</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .confirmacion-container {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .confirmacion-card {
+      background: var(--color-background-primary, #fff);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      padding: 3rem 2rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+    .check-circle {
+      width: 80px; height: 80px;
+      background: #e8f5e9;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.5rem;
+    }
+    .confirmacion-card h1 { color: #2d6a4f; font-size: 1.8rem; margin-bottom: .5rem; }
+    .confirmacion-card p  { color: #6c757d; margin-bottom: 1.5rem; }
+    .orden-numero {
+      background: #f8f9fa;
+      border: 2px dashed #52b788;
+      border-radius: 8px;
+      padding: .75rem 1.5rem;
+      font-size: 1.1rem;
+      color: #2d6a4f;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+    .medio-pago-badge {
+      background: #e8f5e9;
+      color: #2d6a4f;
+      padding: .4rem 1rem;
+      border-radius: 20px;
+      font-size: .9rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+    .btn-factura {
+      background: #2d6a4f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .85rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      transition: background .2s;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: .75rem;
+    }
+    .btn-factura:hover { background: #1b4332; }
+    .btn-seguir {
+      background: transparent;
+      color: #2d6a4f;
+      border: 2px solid #2d6a4f;
+      border-radius: 8px;
+      padding: .8rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      width: 100%;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .btn-seguir:hover { background: #2d6a4f; color: #fff; }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/header') %>
+
+<main class="confirmacion-container">
+  <div class="confirmacion-card">
+
+    <div class="check-circle">✅</div>
+
+    <h1>¡Compra exitosa!</h1>
+    <p>Tu pedido ha sido registrado correctamente.</p>
+
+    <div class="orden-numero">
+      <i class="fa-solid fa-receipt"></i>
+      Orden N° <%= String(orderId).padStart(6, '0') %>
+    </div>
+
+    <br>
+    <div class="medio-pago-badge">
+      <i class="fa-solid fa-credit-card"></i>
+      Medio de pago: <%= medioPago %>
+    </div>
+
+    <a href="/factura/<%= orderId %>" class="btn-factura" target="_blank">
+      <i class="fa-solid fa-file-pdf"></i>
+      Descargar Factura Electrónica (PDF)
+    </a>
+
+    <a href="/productos" class="btn-seguir">
+      <i class="fa-solid fa-store"></i>
+      Seguir comprando
+    </a>
+
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script>
+  // Limpiar carrito del localStorage al llegar a esta página
+  localStorage.removeItem('carrito');
+  // Actualizar badge del carrito si existe
+  const badge = document.querySelector('.cart-count');
+  if (badge) badge.textContent = '0';
+</script>
+
+</body>
+</html>

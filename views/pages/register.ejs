@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - Agroferre Store</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .field-error { color: #e53e3e; font-size: 12px; margin-top: 4px; display: none; }
+    .input-group.invalid input,
+    .input-group.invalid select { border-color: #e53e3e; }
+    .input-group.valid input,
+    .input-group.valid select { border-color: #38a169; }
+    .password-strength { height: 4px; border-radius: 2px; margin-top: 6px; transition: all .3s; }
+    .strength-weak   { background: #e53e3e; width: 33%; }
+    .strength-medium { background: #d69e2e; width: 66%; }
+    .strength-strong { background: #38a169; width: 100%; }
+    .strength-label  { font-size: 11px; margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/header') %>
+
+<main class="login-container">
+  <div class="login-card">
+
+    <h2 class="login-title">
+      <i class="fa-solid fa-user-plus"></i>
+      Crear Cuenta
+    </h2>
+    <p class="login-subtitle">Regístrate para comprar en Agroferre Store</p>
+
+    <% if (error) { %>
+      <div class="error-box"><%= error %></div>
+    <% } %>
+    <% if (success) { %>
+      <div class="success-box"><%= success %></div>
+    <% } %>
+
+    <form id="registerForm" action="/register" method="POST"
+          enctype="multipart/form-data" class="login-form" novalidate>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <div class="input-group" id="group-nombre">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="nombre" name="nombre"
+                 placeholder="Tu nombre completo" autocomplete="name">
+        </div>
+        <span class="field-error" id="err-nombre"></span>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group" id="group-email">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="email" name="email"
+                 placeholder="tu@email.com" autocomplete="email">
+        </div>
+        <span class="field-error" id="err-email"></span>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="input-group" id="group-password">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password" name="password"
+                 placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+        </div>
+        <div class="password-strength" id="strengthBar"></div>
+        <span class="strength-label" id="strengthLabel"></span>
+        <span class="field-error" id="err-password"></span>
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar contraseña</label>
+        <div class="input-group" id="group-confirm">
+          <i class="fa-solid fa-shield-halved"></i>
+          <input type="password" id="confirmPassword" name="confirmPassword"
+                 placeholder="Repite tu contraseña" autocomplete="new-password">
+        </div>
+        <span class="field-error" id="err-confirm"></span>
+      </div>
+
+      <!-- Foto de perfil -->
+      <div class="form-group">
+        <label for="profileImage">Foto de perfil (opcional)</label>
+        <div class="file-upload">
+          <label for="profileImage" class="file-label">
+            <i class="fa-solid fa-image"></i> Seleccionar imagen
+          </label>
+          <input type="file" id="profileImage" name="profileImage" accept=".jpg,.jpeg,.png,.gif">
+        </div>
+        <span class="field-error" id="err-imagen"></span>
+        <div id="preview-container" class="preview-container" style="display:none">
+          <img id="image-preview" style="max-width:80px;border-radius:50%">
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">
+        <i class="fa-solid fa-user-plus"></i> Registrarse
+      </button>
+
+    </form>
+
+    <p class="register-link">
+      ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
+    </p>
+
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script>
+// ── Utilidades ────────────────────────────────────────────────────────────────
+function showError(fieldId, groupId, msg) {
+  const err = document.getElementById(fieldId);
+  const grp = document.getElementById(groupId);
+  err.textContent = msg;
+  err.style.display = 'block';
+  grp.classList.add('invalid');
+  grp.classList.remove('valid');
+}
+
+function clearError(fieldId, groupId) {
+  const err = document.getElementById(fieldId);
+  const grp = document.getElementById(groupId);
+  err.textContent = '';
+  err.style.display = 'none';
+  grp.classList.remove('invalid');
+  grp.classList.add('valid');
+}
+
+// ── Validaciones individuales ─────────────────────────────────────────────────
+function validateNombre() {
+  const val = document.getElementById('nombre').value.trim();
+  if (!val) { showError('err-nombre', 'group-nombre', 'El nombre es obligatorio.'); return false; }
+  if (val.length < 2) { showError('err-nombre', 'group-nombre', 'El nombre debe tener al menos 2 caracteres.'); return false; }
+  clearError('err-nombre', 'group-nombre');
+  return true;
+}
+
+function validateEmail() {
+  const val = document.getElementById('email').value.trim();
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!val) { showError('err-email', 'group-email', 'El email es obligatorio.'); return false; }
+  if (!regex.test(val)) { showError('err-email', 'group-email', 'Ingresa un email con formato válido.'); return false; }
+  clearError('err-email', 'group-email');
+  return true;
+}
+
+function validatePassword() {
+  const val = document.getElementById('password').value;
+  const bar = document.getElementById('strengthBar');
+  const lbl = document.getElementById('strengthLabel');
+
+  // Medir fuerza
+  let score = 0;
+  if (val.length >= 8)              score++;
+  if (/[A-Z]/.test(val))            score++;
+  if (/[a-z]/.test(val))            score++;
+  if (/[0-9]/.test(val))            score++;
+  if (/[^A-Za-z0-9]/.test(val))     score++;
+
+  bar.className = 'password-strength';
+  if (val.length === 0) { bar.style.width = '0'; lbl.textContent = ''; }
+  else if (score <= 2)  { bar.classList.add('strength-weak');   lbl.textContent = '🔴 Contraseña débil'; }
+  else if (score <= 3)  { bar.classList.add('strength-medium'); lbl.textContent = '🟡 Contraseña media'; }
+  else                  { bar.classList.add('strength-strong'); lbl.textContent = '🟢 Contraseña fuerte'; }
+
+  if (!val) { showError('err-password', 'group-password', 'La contraseña es obligatoria.'); return false; }
+  if (val.length < 8)       { showError('err-password', 'group-password', 'Mínimo 8 caracteres.'); return false; }
+  if (!/[A-Z]/.test(val))   { showError('err-password', 'group-password', 'Debe incluir al menos una mayúscula.'); return false; }
+  if (!/[a-z]/.test(val))   { showError('err-password', 'group-password', 'Debe incluir al menos una minúscula.'); return false; }
+  if (!/[0-9]/.test(val))   { showError('err-password', 'group-password', 'Debe incluir al menos un número.'); return false; }
+  if (!/[^A-Za-z0-9]/.test(val)) { showError('err-password', 'group-password', 'Debe incluir al menos un carácter especial (@, #, !, etc.).'); return false; }
+  clearError('err-password', 'group-password');
+  return true;
+}
+
+function validateConfirm() {
+  const pass = document.getElementById('password').value;
+  const conf = document.getElementById('confirmPassword').value;
+  if (!conf) { showError('err-confirm', 'group-confirm', 'Debes confirmar tu contraseña.'); return false; }
+  if (pass !== conf) { showError('err-confirm', 'group-confirm', 'Las contraseñas no coinciden.'); return false; }
+  clearError('err-confirm', 'group-confirm');
+  return true;
+}
+
+function validateImagen() {
+  const file = document.getElementById('profileImage').files[0];
+  if (!file) return true; // opcional
+  const allowed = /\.(jpg|jpeg|png|gif)$/i;
+  if (!allowed.test(file.name)) {
+    showError('err-imagen', 'group-nombre', 'La imagen debe ser JPG, JPEG, PNG o GIF.');
+    document.getElementById('err-imagen').style.display = 'block';
+    return false;
+  }
+  return true;
+}
+
+// ── Eventos en tiempo real ────────────────────────────────────────────────────
+document.getElementById('nombre').addEventListener('input', validateNombre);
+document.getElementById('email').addEventListener('input', validateEmail);
+document.getElementById('password').addEventListener('input', () => { validatePassword(); validateConfirm(); });
+document.getElementById('confirmPassword').addEventListener('input', validateConfirm);
+
+// Vista previa imagen
+document.getElementById('profileImage').addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  const allowed = /\.(jpg|jpeg|png|gif)$/i;
+  if (!allowed.test(file.name)) {
+    document.getElementById('err-imagen').textContent = 'La imagen debe ser JPG, JPEG, PNG o GIF.';
+    document.getElementById('err-imagen').style.display = 'block';
+    return;
+  }
+  document.getElementById('err-imagen').style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('image-preview').src = e.target.result;
+    document.getElementById('preview-container').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+// ── Submit: validar todo antes de enviar ──────────────────────────────────────
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  const ok = [validateNombre(), validateEmail(), validatePassword(), validateConfirm(), validateImagen()];
+  if (ok.includes(false)) {
+    e.preventDefault();
+    // Scroll al primer error
+    const firstErr = document.querySelector('.field-error[style*="block"]');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+</script>
+
+</body>
+</html>

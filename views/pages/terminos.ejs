@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Términos y Condiciones — Agroferre Store</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .legal-hero {
+      background: linear-gradient(135deg, #2d6a4f, #52b788);
+      color: #fff;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .legal-hero h1 { font-size: 2rem; margin-bottom: .5rem; }
+    .legal-hero p  { opacity: .85; font-size: 1rem; }
+
+    .legal-container {
+      max-width: 860px;
+      margin: 3rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+    .legal-toc {
+      background: #f4faf6;
+      border-left: 4px solid #52b788;
+      border-radius: 0 10px 10px 0;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .legal-toc h3 {
+      color: #2d6a4f;
+      margin-bottom: .75rem;
+      font-size: 1rem;
+    }
+    .legal-toc ol {
+      margin: 0; padding-left: 1.2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: .3rem .5rem;
+    }
+    .legal-toc a {
+      color: #2d6a4f; text-decoration: none; font-size: .88rem;
+    }
+    .legal-toc a:hover { text-decoration: underline; }
+
+    .legal-section {
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 80px;
+    }
+    .legal-section h2 {
+      font-size: 1.15rem;
+      color: #2d6a4f;
+      border-bottom: 2px solid #e8f5e9;
+      padding-bottom: .5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .legal-section h2 .num {
+      background: #2d6a4f;
+      color: #fff;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem;
+      flex-shrink: 0;
+    }
+    .legal-section p, .legal-section li {
+      color: #444;
+      line-height: 1.8;
+      font-size: .95rem;
+    }
+    .legal-section ul, .legal-section ol {
+      padding-left: 1.4rem;
+      margin: .5rem 0;
+    }
+    .legal-section li { margin-bottom: .3rem; }
+
+    .legal-highlight {
+      background: #fff8e1;
+      border-left: 4px solid #f59e0b;
+      border-radius: 0 8px 8px 0;
+      padding: .9rem 1.2rem;
+      margin: 1rem 0;
+      font-size: .9rem;
+      color: #6b5200;
+    }
+    .legal-update {
+      text-align: center;
+      color: #9bb09b;
+      font-size: .82rem;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8f5e9;
+    }
+    @media (max-width: 600px) {
+      .legal-toc ol { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/header') %>
+
+<!-- Hero -->
+<div class="legal-hero">
+  <h1><i class="fa-solid fa-scale-balanced"></i> Términos y Condiciones</h1>
+  <p>Agroferre Store — San Gil, Santander, Colombia</p>
+</div>
+
+<div class="legal-container">
+
+  <!-- Tabla de contenido -->
+  <div class="legal-toc">
+    <h3><i class="fa-solid fa-list"></i> Contenido</h3>
+    <ol>
+      <li><a href="#s1">Información general</a></li>
+      <li><a href="#s2">Uso del sitio</a></li>
+      <li><a href="#s3">Registro y cuenta</a></li>
+      <li><a href="#s4">Productos y precios</a></li>
+      <li><a href="#s5">Proceso de compra</a></li>
+      <li><a href="#s6">Medios de pago</a></li>
+      <li><a href="#s7">Envíos y entregas</a></li>
+      <li><a href="#s8">Devoluciones y garantías</a></li>
+      <li><a href="#s9">Protección de datos</a></li>
+      <li><a href="#s10">Ley aplicable</a></li>
+    </ol>
+  </div>
+
+  <!-- Sección 1 -->
+  <div class="legal-section" id="s1">
+    <h2><span class="num">1</span> Información General</h2>
+    <p>
+      <strong>Agroferre Store</strong> es una tienda en línea colombiana especializada en la comercialización de insumos agrícolas, productos veterinarios y artículos de ferretería. Operamos bajo la legislación colombiana y estamos domiciliados en la ciudad de San Gil, Santander.
+    </p>
+    <ul>
+      <li><strong>Razón social:</strong> Agroferre Store</li>
+      <li><strong>NIT:</strong> 900.123.456-7</li>
+      <li><strong>Dirección:</strong> San Gil, Santander, Colombia</li>
+      <li><strong>Teléfono:</strong> +57 300 123 4567</li>
+      <li><strong>Email:</strong> ventas@agroferre.com</li>
+      <li><strong>Horario de atención:</strong> Lunes a Sábado de 7:00 a.m. a 6:00 p.m.</li>
+    </ul>
+  </div>
+
+  <!-- Sección 2 -->
+  <div class="legal-section" id="s2">
+    <h2><span class="num">2</span> Uso del Sitio</h2>
+    <p>Al acceder y utilizar este sitio web, el usuario acepta cumplir con los presentes términos. Está <strong>prohibido</strong>:</p>
+    <ul>
+      <li>Registrar información falsa o usar identidades de terceros.</li>
+      <li>Intentar vulnerar la seguridad del sistema o la base de datos.</li>
+      <li>Usar el sitio para fines ilícitos o contrarios a la moral.</li>
+      <li>Reproducir o comercializar el contenido del sitio sin autorización.</li>
+    </ul>
+    <p>Agroferre Store se reserva el derecho de suspender cuentas que incumplan estas condiciones.</p>
+  </div>
+
+  <!-- Sección 3 -->
+  <div class="legal-section" id="s3">
+    <h2><span class="num">3</span> Registro y Cuenta de Usuario</h2>
+    <p>Para realizar compras es necesario crear una cuenta. El usuario es responsable de:</p>
+    <ul>
+      <li>Mantener la confidencialidad de su contraseña.</li>
+      <li>Notificar de inmediato cualquier uso no autorizado de su cuenta.</li>
+      <li>Proporcionar información veraz y actualizada en su perfil.</li>
+    </ul>
+    <div class="legal-highlight">
+      ⚠️ Agroferre Store nunca solicitará tu contraseña por teléfono, WhatsApp o correo electrónico.
+    </div>
+  </div>
+
+  <!-- Sección 4 -->
+  <div class="legal-section" id="s4">
+    <h2><span class="num">4</span> Productos y Precios</h2>
+    <ul>
+      <li>Los precios publicados incluyen IVA y están expresados en pesos colombianos (COP).</li>
+      <li>Agroferre Store se reserva el derecho de modificar precios sin previo aviso.</li>
+      <li>La disponibilidad de productos está sujeta al stock existente al momento de la compra.</li>
+      <li>Las imágenes de los productos son de referencia; el producto real puede tener variaciones mínimas.</li>
+      <li>En caso de error tipográfico en el precio, nos reservamos el derecho de anular el pedido e informar al cliente.</li>
+    </ul>
+  </div>
+
+  <!-- Sección 5 -->
+  <div class="legal-section" id="s5">
+    <h2><span class="num">5</span> Proceso de Compra</h2>
+    <p>El proceso de compra en Agroferre Store sigue estos pasos:</p>
+    <ol>
+      <li><strong>Selección:</strong> El cliente agrega productos al carrito de compras.</li>
+      <li><strong>Revisión:</strong> Verifica los productos, cantidades y total antes de continuar.</li>
+      <li><strong>Pago:</strong> Selecciona el medio de pago y finaliza la compra.</li>
+      <li><strong>Confirmación:</strong> Recibirás un número de orden y podrás descargar tu factura electrónica.</li>
+    </ol>
+    <p>La orden queda confirmada únicamente cuando el sistema genera el número de pedido. Agroferre Store se reserva el derecho de cancelar pedidos por falta de stock o información incorrecta.</p>
+  </div>
+
+  <!-- Sección 6 -->
+  <div class="legal-section" id="s6">
+    <h2><span class="num">6</span> Medios de Pago</h2>
+    <p>Aceptamos los siguientes medios de pago:</p>
+    <ul>
+      <li>💵 Efectivo (pago contraentrega o en tienda física)</li>
+      <li>💳 Tarjeta débito y crédito</li>
+      <li>📲 Transferencia bancaria</li>
+      <li>🟣 Nequi</li>
+      <li>🔴 Daviplata</li>
+    </ul>
+    <div class="legal-highlight">
+      ⚠️ Agroferre Store no almacena datos de tarjetas de crédito ni débito. Los pagos con tarjeta se procesan a través de plataformas certificadas.
+    </div>
+  </div>
+
+  <!-- Sección 7 -->
+  <div class="legal-section" id="s7">
+    <h2><span class="num">7</span> Envíos y Entregas</h2>
+    <ul>
+      <li>Realizamos envíos a todo el territorio colombiano a través de transportadoras aliadas.</li>
+      <li>El tiempo de entrega estimado es de <strong>2 a 5 días hábiles</strong> según la zona.</li>
+      <li>Los costos de envío se calculan al momento del pago según el destino y el peso del pedido.</li>
+      <li>El cliente es responsable de proporcionar una dirección de entrega correcta y completa.</li>
+      <li>Agroferre Store no se hace responsable por demoras ocasionadas por la transportadora o factores externos (clima, orden público, festivos).</li>
+    </ul>
+  </div>
+
+  <!-- Sección 8 -->
+  <div class="legal-section" id="s8">
+    <h2><span class="num">8</span> Devoluciones y Garantías</h2>
+    <p>Nuestra política de devoluciones aplica bajo las siguientes condiciones:</p>
+    <ul>
+      <li>El cliente tiene <strong>5 días hábiles</strong> desde la recepción para reportar productos defectuosos o incorrectos.</li>
+      <li>El producto debe estar en su empaque original, sin uso y con todos sus accesorios.</li>
+      <li>No se aceptan devoluciones de productos agroquímicos, medicamentos veterinarios o artículos de consumo una vez abiertos.</li>
+      <li>Los gastos de envío por devolución corren por cuenta del cliente, salvo que el error sea de Agroferre Store.</li>
+    </ul>
+    <p>Para iniciar un proceso de devolución, comunícate a <strong>ventas@agroferre.com</strong> o llama al +57 300 123 4567.</p>
+  </div>
+
+  <!-- Sección 9 -->
+  <div class="legal-section" id="s9">
+    <h2><span class="num">9</span> Protección de Datos Personales</h2>
+    <p>
+      En cumplimiento de la <strong>Ley 1581 de 2012</strong> (Ley de Protección de Datos Personales de Colombia) y sus decretos reglamentarios, Agroferre Store recopila y trata los datos personales de sus clientes bajo los siguientes principios:
+    </p>
+    <ul>
+      <li><strong>Finalidad:</strong> Los datos se usan exclusivamente para gestionar pedidos, envíos, facturación y comunicaciones comerciales.</li>
+      <li><strong>Seguridad:</strong> Implementamos medidas técnicas para proteger tu información.</li>
+      <li><strong>No compartimos</strong> tus datos con terceros sin tu consentimiento, salvo obligación legal.</li>
+      <li>Tienes derecho a <strong>conocer, actualizar, rectificar y suprimir</strong> tus datos en cualquier momento.</li>
+    </ul>
+    <p>Para ejercer estos derechos, escríbenos a <strong>ventas@agroferre.com</strong>.</p>
+    <p>Consulta nuestra <a href="/politica-datos" style="color:#2d6a4f;font-weight:600;">Política de Tratamiento de Datos Personales</a> para más información.</p>
+  </div>
+
+  <!-- Sección 10 -->
+  <div class="legal-section" id="s10">
+    <h2><span class="num">10</span> Ley Aplicable y Resolución de Conflictos</h2>
+    <p>
+      Estos términos y condiciones se rigen por la legislación colombiana. En caso de controversia, las partes acudirán en primera instancia a una solución amigable. Si no es posible, se someterán a la jurisdicción de los jueces competentes de la ciudad de San Gil, Santander, Colombia.
+    </p>
+    <p>
+      Agroferre Store también acoge lo dispuesto en la <strong>Ley 1480 de 2011</strong> (Estatuto del Consumidor) para garantizar los derechos de nuestros clientes.
+    </p>
+  </div>
+
+  <div class="legal-update">
+    <i class="fa-solid fa-calendar-check"></i>
+    Última actualización: Mayo de 2026 &nbsp;·&nbsp; Agroferre Store
+  </div>
+
+</div>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - Agroferre Store</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .cart-summary-box {
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 14px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 1rem;
+    }
+    .cart-summary-box h3 { color: #2d6a4f; margin-bottom: 1rem; font-size: 1.1rem; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: .5rem; font-size: .95rem; color: #444; }
+    .summary-total { font-size: 1.1rem; font-weight: 700; color: #2d6a4f; border-top: 2px solid #e8f5e9; padding-top: .75rem; margin-top: .5rem; }
+
+    .medio-pago-section { background: #f8f9fa; border: 1.5px solid #dee2e6; border-radius: 10px; padding: 1.2rem; margin: 1.2rem 0; }
+    .medio-pago-section h4 { color: #2d6a4f; margin-bottom: .75rem; font-size: .95rem; }
+    .medio-pago-options { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .medio-pago-option {
+      display: flex; align-items: center; gap: .5rem;
+      background: #fff; border: 2px solid #dee2e6; border-radius: 8px;
+      padding: .6rem .8rem; cursor: pointer; transition: all .2s; font-size: .88rem;
+    }
+    .medio-pago-option:hover { border-color: #52b788; }
+    .medio-pago-option input[type="radio"] { accent-color: #2d6a4f; }
+    .medio-pago-option.selected { border-color: #2d6a4f; background: #e8f5e9; font-weight: 600; color: #2d6a4f; }
+
+    .btn-checkout {
+      width: 100%; padding: 1rem; background: #2d6a4f; color: #fff;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; margin-top: 1rem; transition: background .2s;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+    }
+    .btn-checkout:hover { background: #1b4332; }
+    .btn-checkout:disabled { background: #adb5bd; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/header') %>
+
+<main class="contenedor">
+  <h2><i class="fa-solid fa-cart-shopping"></i> Tu Carrito</h2>
+
+  <div id="cart-container" class="cart-layout">
+    <!-- Productos -->
+    <div id="cart-items"></div>
+
+    <!-- Resumen + Medio de pago -->
+    <div class="cart-summary-box">
+
+      <!-- Resumen de precios -->
+           <div id="resumen-precios">
+  <h3>Resumen</h3>
+  <div class="summary-row">
+    <span>Subtotal</span>
+    <span>$0</span>
+  </div>
+  <div class="summary-row summary-total">
+    <span>Total</span>
+    <span>$0</span>
+  </div>
+</div>
+
+      <!-- Selector de medio de pago -->
+      <div class="medio-pago-section">
+        <h4><i class="fa-solid fa-credit-card"></i> Medio de pago</h4>
+        <div class="medio-pago-options">
+          <label class="medio-pago-option selected">
+            <input type="radio" name="medioPago" value="Efectivo" checked> 💵 Efectivo
+          </label>
+          <label class="medio-pago-option">
+            <input type="radio" name="medioPago" value="Tarjeta débito"> 💳 Tarjeta débito
+          </label>
+          <label class="medio-pago-option">
+            <input type="radio" name="medioPago" value="Tarjeta crédito"> 🏦 Tarjeta crédito
+          </label>
+                  </label>
+          <label class="medio-pago-option">
+            <input type="radio" name="medioPago" value="Nequi"> 🟣 Nequi
+          </label>
+          <label class="medio-pago-option">
+            <input type="radio" name="medioPago" value="Daviplata"> 🔴 Daviplata
+          </label>
+        </div>
+      </div>
+
+      <button type="button" class="btn-checkout" id="checkout-btn">
+        <i class="fa-solid fa-bag-shopping"></i> Finalizar Compra
+      </button>
+
+    </div>
+  </div>
+
+  <div id="empty-cart" class="empty-state" style="display:none">
+    <p style="font-size:1.2rem;margin-bottom:1rem;">Tu carrito está vacío</p>
+    <a href="/productos" class="btn" style="width:auto;display:inline-block;">
+      <i class="fa-solid fa-store"></i> Explorar productos
+    </a>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+
+<script>
+// Resaltar opción seleccionada
+document.querySelectorAll('.medio-pago-option').forEach(label => {
+  label.addEventListener('click', function() {
+    document.querySelectorAll('.medio-pago-option').forEach(l => l.classList.remove('selected'));
+    this.classList.add('selected');
+  });
+});
+</script>
+
+</body>
+</html>
